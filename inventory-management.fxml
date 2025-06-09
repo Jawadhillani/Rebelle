@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="10.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="com.rebelle.controllers.InventoryController">
+    
+    <padding>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+    </padding>
+    
+    <!-- Toolbar -->
+    <HBox spacing="10.0" alignment="CENTER_LEFT">
+        <ComboBox fx:id="categoryFilter" promptText="Filter by category"/>
+        <ComboBox fx:id="statusFilter" promptText="Filter by status"/>
+        <TextField fx:id="searchField" promptText="Search items..." prefWidth="200.0"/>
+        <Button fx:id="searchBtn" text="Search" onAction="#handleSearch"/>
+        <Button fx:id="clearFilterBtn" text="Clear Filters" onAction="#handleClearFilters"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button fx:id="addItemBtn" text="Add Item" onAction="#handleAddItem"/>
+    </HBox>
+    
+    <!-- Inventory Table -->
+    <TableView fx:id="inventoryTable" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="idColumn" text="ID" prefWidth="50.0"/>
+            <TableColumn fx:id="nameColumn" text="Name" prefWidth="150.0"/>
+            <TableColumn fx:id="categoryColumn" text="Category" prefWidth="100.0"/>
+            <TableColumn fx:id="quantityColumn" text="Quantity" prefWidth="100.0"/>
+            <TableColumn fx:id="unitColumn" text="Unit" prefWidth="80.0"/>
+            <TableColumn fx:id="thresholdColumn" text="Threshold" prefWidth="80.0"/>
+            <TableColumn fx:id="costColumn" text="Cost/Unit" prefWidth="100.0"/>
+            <TableColumn fx:id="supplierColumn" text="Supplier" prefWidth="150.0"/>
+            <TableColumn fx:id="expiryColumn" text="Expiry Date" prefWidth="100.0"/>
+            <TableColumn fx:id="statusColumn" text="Status" prefWidth="100.0"/>
+        </columns>
+    </TableView>
+    
+    <!-- Action Buttons -->
+    <HBox spacing="10.0" alignment="CENTER_RIGHT">
+        <Button fx:id="editItemBtn" text="Edit" onAction="#handleEditItem"/>
+        <Button fx:id="restockBtn" text="Restock" onAction="#handleAddStock"/>
+        <Button fx:id="useItemBtn" text="Use Item" onAction="#handleRemoveStock"/>
+        <Button fx:id="deleteItemBtn" text="Delete" onAction="#handleDeleteItem"/>
+    </HBox>
+    
+    <!-- Status Bar -->
+    <HBox spacing="10.0" alignment="CENTER_LEFT">
+        <Label fx:id="itemCountLabel" text="0 items"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Label fx:id="lowStockLabel" text="0 items low in stock" styleClass="warning-text"/>
+        <Label fx:id="expiringLabel" text="0 items expiring soon" styleClass="warning-text"/>
+    </HBox>
+    
+</VBox> 

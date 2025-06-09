@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rebelle.controllers.PatientController">
+   
+   <top>
+      <!-- Search and Action Bar -->
+      <VBox spacing="10.0">
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+         
+         <!-- Title -->
+         <Label text="Patient Management" styleClass="section-title" />
+         
+         <!-- Search and Actions Row -->
+         <HBox alignment="CENTER_LEFT" spacing="10.0">
+            <TextField fx:id="searchField" promptText="Search patients by name, phone, or email..." prefWidth="300.0" />
+            <Button fx:id="searchBtn" onAction="#handleSearch" text="Search" />
+            <Button fx:id="clearSearchBtn" onAction="#handleClearSearch" text="Clear" />
+            
+            <!-- Spacer -->
+            <Region HBox.hgrow="ALWAYS" />
+            
+            <!-- Action Buttons -->
+            <Button fx:id="addPatientBtn" onAction="#handleAddPatient" text="+ New Patient" styleClass="action-button" />
+            <Button fx:id="editPatientBtn" onAction="#handleEditPatient" text="Edit" disable="true" />
+            <Button fx:id="deletePatientBtn" onAction="#handleDeletePatient" text="Delete" disable="true" styleClass="danger" />
+         </HBox>
+      </VBox>
+   </top>
+   
+   <center>
+      <!-- Patient Table -->
+      <TableView fx:id="patientTable">
+         <columns>
+            <TableColumn fx:id="idColumn" text="ID" prefWidth="60.0" />
+            <TableColumn fx:id="nameColumn" text="Name" prefWidth="200.0" />
+            <TableColumn fx:id="ageColumn" text="Age" prefWidth="60.0" />
+            <TableColumn fx:id="phoneColumn" text="Phone" prefWidth="150.0" />
+            <TableColumn fx:id="emailColumn" text="Email" prefWidth="200.0" />
+            <TableColumn fx:id="addressColumn" text="Address" prefWidth="250.0" />
+            <TableColumn fx:id="createdColumn" text="Created" prefWidth="120.0" />
+         </columns>
+         
+         <placeholder>
+            <VBox alignment="CENTER" spacing="10.0">
+               <Label text="No patients found" styleClass="placeholder-text" />
+               <Button onAction="#handleAddPatient" text="Add First Patient" styleClass="action-button" />
+            </VBox>
+         </placeholder>
+      </TableView>
+   </center>
+   
+   <bottom>
+      <!-- Status Bar -->
+      <HBox alignment="CENTER_LEFT" spacing="10.0" styleClass="status-bar">
+         <padding>
+            <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+         </padding>
+         
+         <Label fx:id="statusLabel" text="Ready" />
+         <Region HBox.hgrow="ALWAYS" />
+         <Label fx:id="patientCountLabel" text="0 patients" />
+      </HBox>
+   </bottom>
+</BorderPane> 

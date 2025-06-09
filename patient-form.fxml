@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rebelle.controllers.PatientFormController" spacing="15.0">
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
+   
+   <!-- Form Title -->
+   <Label fx:id="formTitleLabel" text="Add New Patient" styleClass="section-title" />
+   
+   <!-- Form Fields -->
+   <GridPane hgap="15.0" vgap="15.0">
+      <columnConstraints>
+         <ColumnConstraints halignment="RIGHT" hgrow="NEVER" minWidth="100.0" />
+         <ColumnConstraints hgrow="ALWAYS" minWidth="250.0" />
+      </columnConstraints>
+      
+      <!-- Name Field -->
+      <Label text="Name *:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+      <TextField fx:id="nameField" promptText="Patient's full name" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+      
+      <!-- Phone Field -->
+      <Label text="Phone:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+      <TextField fx:id="phoneField" promptText="Phone number" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      
+      <!-- Email Field -->
+      <Label text="Email:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+      <TextField fx:id="emailField" promptText="Email address" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      
+      <!-- Date of Birth Field -->
+      <Label text="Date of Birth:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+      <DatePicker fx:id="dobField" promptText="Select date of birth" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      
+      <!-- Address Field -->
+      <Label text="Address:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+      <TextArea fx:id="addressField" promptText="Home address" prefRowCount="2" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+      
+      <!-- Medical Notes Field -->
+      <Label text="Medical Notes:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+      <TextArea fx:id="medicalNotesField" promptText="Medical history, allergies, notes..." prefRowCount="3" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+   </GridPane>
+   
+   <!-- Required Fields Note -->
+   <Label text="* Required fields" styleClass="help-text" />
+   
+   <!-- Validation Message -->
+   <Label fx:id="validationLabel" text="" styleClass="error-text" visible="false" />
+   
+   <!-- Button Bar -->
+   <HBox alignment="CENTER_RIGHT" spacing="10.0">
+      <padding>
+         <Insets top="10.0" />
+      </padding>
+      
+      <Button fx:id="cancelBtn" onAction="#handleCancel" text="Cancel" />
+      <Button fx:id="saveBtn" onAction="#handleSave" text="Save Patient" styleClass="action-button" />
+   </HBox>
+</VBox> 

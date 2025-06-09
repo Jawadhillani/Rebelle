@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rebelle.controllers.BillingController">
+   
+   <top>
+      <!-- Finance Summary and Actions -->
+      <VBox spacing="10.0">
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+         
+         <!-- Title -->
+         <Label text="Business Finance" styleClass="section-title" />
+         
+         <!-- Finance Summary Cards -->
+         <GridPane hgap="15.0" vgap="10.0">
+            <columnConstraints>
+               <ColumnConstraints percentWidth="25.0" />
+               <ColumnConstraints percentWidth="25.0" />
+               <ColumnConstraints percentWidth="25.0" />
+               <ColumnConstraints percentWidth="25.0" />
+            </columnConstraints>
+            
+            <!-- Today's Revenue -->
+            <VBox alignment="CENTER" spacing="5.0" styleClass="finance-card revenue-card" GridPane.columnIndex="0" GridPane.rowIndex="0">
+               <Label text="Today's Revenue" styleClass="finance-card-title" />
+               <Label fx:id="todayRevenueLabel" text="$0.00" styleClass="finance-card-amount revenue" />
+            </VBox>
+            
+            <!-- Today's Expenses -->
+            <VBox alignment="CENTER" spacing="5.0" styleClass="finance-card expense-card" GridPane.columnIndex="1" GridPane.rowIndex="0">
+               <Label text="Today's Expenses" styleClass="finance-card-title" />
+               <Label fx:id="todayExpenseLabel" text="$0.00" styleClass="finance-card-amount expense" />
+            </VBox>
+            
+            <!-- This Month Revenue -->
+            <VBox alignment="CENTER" spacing="5.0" styleClass="finance-card revenue-card" GridPane.columnIndex="2" GridPane.rowIndex="0">
+               <Label text="This Month Revenue" styleClass="finance-card-title" />
+               <Label fx:id="monthRevenueLabel" text="$0.00" styleClass="finance-card-amount revenue" />
+            </VBox>
+            
+            <!-- This Month Profit -->
+            <VBox alignment="CENTER" spacing="5.0" styleClass="finance-card profit-card" GridPane.columnIndex="3" GridPane.rowIndex="0">
+               <Label text="This Month Profit" styleClass="finance-card-title" />
+               <Label fx:id="monthProfitLabel" text="$0.00" styleClass="finance-card-amount profit" />
+            </VBox>
+         </GridPane>
+         
+         <!-- Action Buttons -->
+         <HBox alignment="CENTER_LEFT" spacing="15.0">
+            <Button fx:id="recordPaymentBtn" onAction="#handleRecordPayment" text="📥 Record Payment" styleClass="action-button success" />
+            <Button fx:id="recordExpenseBtn" onAction="#handleRecordExpense" text="📤 Record Expense" styleClass="action-button warning" />
+            
+            <!-- Period Filter -->
+            <Region HBox.hgrow="ALWAYS" />
+            <Label text="Show:" />
+            <ComboBox fx:id="periodFilterComboBox" onAction="#handlePeriodFilter" />
+         </HBox>
+      </VBox>
+   </top>
+   
+   <center>
+      <!-- Transactions View with Tabs -->
+      <TabPane fx:id="transactionTabPane" tabClosingPolicy="UNAVAILABLE">
+         
+         <!-- All Transactions Tab -->
+         <Tab text="All Transactions">
+            <content>
+               <VBox spacing="10.0">
+                  <padding>
+                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                  </padding>
+                  
+                  <!-- Search -->
+                  <HBox spacing="10.0" alignment="CENTER_LEFT">
+                     <TextField fx:id="allSearchField" promptText="Search transactions..." prefWidth="300.0" />
+                     <Button fx:id="allSearchBtn" onAction="#handleSearchAll" text="Search" />
+                     <Button fx:id="allClearBtn" onAction="#handleClearSearchAll" text="Clear" />
+                  </HBox>
+                  
+                  <!-- Combined Transactions Table -->
+                  <TableView fx:id="allTransactionsTable" rowFactory="#createAllTransactionsTableRow">
+                     <columns>
+                        <TableColumn fx:id="allTypeColumn" text="Type" prefWidth="80.0" />
+                        <TableColumn fx:id="allDateColumn" text="Date" prefWidth="100.0" />
+                        <TableColumn fx:id="allDescriptionColumn" text="Description" prefWidth="250.0" />
+                        <TableColumn fx:id="allAmountColumn" text="Amount" prefWidth="100.0" />
+                        <TableColumn fx:id="allMethodColumn" text="Method" prefWidth="120.0" />
+                        <TableColumn fx:id="allDetailsColumn" text="Details" prefWidth="200.0" />
+                     </columns>
+                     
+                     <placeholder>
+                        <VBox alignment="CENTER" spacing="10.0">
+                           <Label text="No transactions found" styleClass="placeholder-text" />
+                        </VBox>
+                     </placeholder>
+                  </TableView>
+               </VBox>
+            </content>
+         </Tab>
+         
+         <!-- Patient Payments Tab -->
+         <Tab text="Patient Payments">
+            <content>
+               <VBox spacing="10.0">
+                  <padding>
+                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                  </padding>
+                  
+                  <!-- Search and Actions -->
+                  <HBox spacing="10.0" alignment="CENTER_LEFT">
+                     <TextField fx:id="paymentSearchField" promptText="Search patient payments..." prefWidth="300.0" />
+                     <Button fx:id="paymentSearchBtn" onAction="#handleSearchPayments" text="Search" />
+                     <Button fx:id="paymentClearBtn" onAction="#handleClearSearchPayments" text="Clear" />
+                     
+                     <Region HBox.hgrow="ALWAYS" />
+                     <Button fx:id="editPaymentBtn" onAction="#handleEditPayment" text="Edit" disable="true" />
+                     <Button fx:id="deletePaymentBtn" onAction="#handleDeletePayment" text="Delete" disable="true" styleClass="danger" />
+                  </HBox>
+                  
+                  <!-- Payments Table -->
+                  <TableView fx:id="paymentsTable" rowFactory="#createPaymentsTableRow">
+                     <columns>
+                        <TableColumn fx:id="paymentDateColumn" text="Date" prefWidth="100.0" />
+                        <TableColumn fx:id="paymentPatientColumn" text="Patient" prefWidth="200.0" />
+                        <TableColumn fx:id="paymentAmountColumn" text="Amount" prefWidth="100.0" />
+                        <TableColumn fx:id="paymentMethodColumn" text="Method" prefWidth="120.0" />
+                        <TableColumn fx:id="paymentDescriptionColumn" text="Description" prefWidth="250.0" />
+                        <TableColumn fx:id="paymentNotesColumn" text="Notes" prefWidth="200.0" />
+                     </columns>
+                     
+                     <placeholder>
+                        <VBox alignment="CENTER" spacing="10.0">
+                           <Label text="No patient payments recorded" styleClass="placeholder-text" />
+                           <Button onAction="#handleRecordPayment" text="Record First Payment" styleClass="action-button success" />
+                        </VBox>
+                     </placeholder>
+                  </TableView>
+               </VBox>
+            </content>
+         </Tab>
+         
+         <!-- Business Expenses Tab -->
+         <Tab text="Business Expenses">
+            <content>
+               <VBox spacing="10.0">
+                  <padding>
+                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                  </padding>
+                  
+                  <!-- Search and Actions -->
+                  <HBox spacing="10.0" alignment="CENTER_LEFT">
+                     <TextField fx:id="expenseSearchField" promptText="Search business expenses..." prefWidth="300.0" />
+                     <Button fx:id="expenseSearchBtn" onAction="#handleSearchExpenses" text="Search" />
+                     <Button fx:id="expenseClearBtn" onAction="#handleClearSearchExpenses" text="Clear" />
+                     
+                     <Region HBox.hgrow="ALWAYS" />
+                     <Button fx:id="editExpenseBtn" onAction="#handleEditExpense" text="Edit" disable="true" />
+                     <Button fx:id="deleteExpenseBtn" onAction="#handleDeleteExpense" text="Delete" disable="true" styleClass="danger" />
+                  </HBox>
+                  
+                  <!-- Expenses Table -->
+                  <TableView fx:id="expensesTable" rowFactory="#createExpensesTableRow">
+                     <columns>
+                        <TableColumn fx:id="expenseDateColumn" text="Date" prefWidth="100.0" />
+                        <TableColumn fx:id="expenseDescriptionColumn" text="Description" prefWidth="200.0" />
+                        <TableColumn fx:id="expenseAmountColumn" text="Amount" prefWidth="100.0" />
+                        <TableColumn fx:id="expenseCategoryColumn" text="Category" prefWidth="150.0" />
+                        <TableColumn fx:id="expenseMethodColumn" text="Method" prefWidth="120.0" />
+                        <TableColumn fx:id="expenseVendorColumn" text="Vendor" prefWidth="150.0" />
+                        <TableColumn fx:id="expenseNotesColumn" text="Notes" prefWidth="200.0" />
+                     </columns>
+                     
+                     <placeholder>
+                        <VBox alignment="CENTER" spacing="10.0">
+                           <Label text="No business expenses recorded" styleClass="placeholder-text" />
+                           <Button onAction="#handleRecordExpense" text="Record First Expense" styleClass="action-button warning" />
+                        </VBox>
+                     </placeholder>
+                  </TableView>
+               </VBox>
+            </content>
+         </Tab>
+         
+      </TabPane>
+   </center>
+   
+   <bottom>
+      <!-- Status Bar -->
+      <HBox alignment="CENTER_LEFT" spacing="10.0" styleClass="status-bar">
+         <padding>
+            <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+         </padding>
+         
+         <Label fx:id="statusLabel" text="Ready" />
+         <Region HBox.hgrow="ALWAYS" />
+         <Label fx:id="transactionCountLabel" text="0 transactions" />
+      </HBox>
+   </bottom>
+</BorderPane> 
